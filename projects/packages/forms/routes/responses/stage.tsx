@@ -344,6 +344,11 @@ function StageInner() {
 						endDate = new Date( dateValue );
 					}
 
+				// Validate dates before processing
+				if (
+					! isNaN( startDate.getTime() ) &&
+					! isNaN( endDate.getTime() )
+				) {
 					startDate.setUTCHours( 0, 0, 0, 0 );
 					endDate.setUTCHours( 23, 59, 59, 999 );
 
@@ -367,6 +372,7 @@ function StageInner() {
 							queryArgs.before = endOfDayISO;
 							break;
 					}
+				}
 				}
 			}
 		} );
