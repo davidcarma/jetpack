@@ -46,8 +46,6 @@ const ResponseMeta = ( { response }: ResponseMetaProps ): import('react').JSX.El
 
 	const responseAuthorEmailParts = response.author_email?.split( '@' ) ?? [];
 
-	const dateSettings = getDateSettings();
-
 	return (
 		<div className="jp-forms__inbox-response-meta">
 			<HStack alignment="topLeft" spacing="3" wrap={ false }>
