@@ -38,11 +38,11 @@
 		"@automattic/jetpack-shared-extension-utils": "workspace:*",
 		"@wordpress/api-fetch": "7.39.0",
 		"@wordpress/components": "32.1.0",
-		"@wordpress/dataviews": "12.0.1-next.v.20260206T143.0",
+		"@wordpress/dataviews": "12.0.1-next.v.202602111440.0",
 		"@wordpress/element": "6.39.0",
 		"@wordpress/i18n": "6.12.0",
 		"@wordpress/notices": "5.39.0",
-		"@wordpress/theme": "0.7.1-next.v.20260206T143.0",
+		"@wordpress/theme": "0.7.1-next.v.202602111440.0",
 		"@wordpress/url": "4.39.0",
 		"debug": "4.4.3"
 	},
