@@ -13,13 +13,15 @@
 
 	a {
 		text-decoration: none;
+		color: var(--jp-black);
 
 		&:any-link,
 		&[role="button"] {
-			color: inherit;
+			color: var(--jp-black);
 		}
 
 		&:hover {
+			color: var(--jp-black);
 			text-decoration: underline;
 			text-decoration-thickness: 1.5px;
 		}
