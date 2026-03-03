@@ -52,7 +52,7 @@ export async function playerBridgeHandler(
 
 	// Propagate only allowed events.
 	if ( VIDEOPRESS_ALLOWED_LISTENING_EVENTS.includes( eventName ) ) {
-		// Propagate only allowed origins.
+		// Only relay player status events from trusted VideoPress origins.
 		const allowed_origins: Array< Origin > = [
 			'https://videopress.com',
 			'https://video.wordpress.com',
@@ -64,6 +64,8 @@ export async function playerBridgeHandler(
 		}
 	}
 
+	// Emitting events (play/pause/seek/volume) come from the embedding page,
+	// which can be any origin. The allowed event-name list is the guard here.
 	if ( VIDEOPRESS_ALLOWED_EMITTING_EVENTS.includes( eventName ) ) {
 		const videoPressIFrame = document.querySelector( 'iframe' );
 		const videoPressWindow = videoPressIFrame?.contentWindow;
