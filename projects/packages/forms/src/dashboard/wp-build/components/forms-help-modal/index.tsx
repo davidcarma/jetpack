@@ -6,7 +6,9 @@ import {
 	Modal,
 	__experimentalText as Text, // eslint-disable-line @wordpress/no-unsafe-wp-apis
 	__experimentalVStack as VStack, // eslint-disable-line @wordpress/no-unsafe-wp-apis
+	__experimentalHStack as HStack, // eslint-disable-line @wordpress/no-unsafe-wp-apis
 } from '@wordpress/components';
+import { createInterpolateElement } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 type Props = {
@@ -30,31 +32,31 @@ export default function FormsHelpModal( { isOpen, onClose }: Props ) {
 	}
 
 	return (
-		<Modal title={ __( 'Not seeing all your forms?', 'jetpack-forms' ) } onRequestClose={ onClose }>
+		<Modal
+			title={ __( 'Some of your existing forms may not appear here yet', 'jetpack-forms' ) }
+			onRequestClose={ onClose }
+		>
 			<VStack spacing="4">
 				<Text>
-					{ __( 'The Forms list shows reusable forms, not simple form blocks.', 'jetpack-forms' ) }
+					{ createInterpolateElement(
+						__(
+							'Forms you already added to pages or posts will continue to work. To manage them in this dashboard, open the page or post, select the form, and click <strong>Edit form</strong> once.',
+							'jetpack-forms'
+						),
+						{ strong: <strong /> }
+					) }
 				</Text>
-				<div>
-					<Text as="p" weight="500">
-						{ __( 'To convert a form block to a reusable form:', 'jetpack-forms' ) }
-					</Text>
-					<ol>
-						<li>
-							{ __( 'Open the page or post where your form block is embedded.', 'jetpack-forms' ) }
-						</li>
-						<li>{ __( 'Select the form block.', 'jetpack-forms' ) }</li>
-						<li>
-							{ __( 'Click “Edit Form” in the block toolbar to convert it.', 'jetpack-forms' ) }
-						</li>
-						<li>{ __( 'Save the page or post.', 'jetpack-forms' ) }</li>
-					</ol>
-				</div>
-				<div>
-					<Button variant="primary" onClick={ onClose }>
-						{ __( 'Got it', 'jetpack-forms' ) }
+				<HStack spacing="3" justify="flex-end">
+					<Button variant="tertiary" onClick={ onClose }>
+						{ __( 'Dismiss', 'jetpack-forms' ) }
 					</Button>
-				</div>
+					<Button
+						variant="primary"
+						href={ new URL( 'edit.php?post_type=page', window.location.origin ).toString() }
+					>
+						{ __( 'View pages', 'jetpack-forms' ) }
+					</Button>
+				</HStack>
 			</VStack>
 		</Modal>
 	);
