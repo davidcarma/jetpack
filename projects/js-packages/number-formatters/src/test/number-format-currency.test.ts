@@ -411,20 +411,56 @@ describe( 'numberFormatCurrency()', () => {
 			} );
 			expect( money ).toBe( 'R$ 9.800.900,32' );
 		} );
-		// Disabled temporarily due to the smallest unit being changed:
+		// This test works differently for different node versions
+		// due to the smallest unit being changed:
 		// https://unicode-org.atlassian.net/browse/CLDR-11586
 		// See also: p1773338482018929-slack-C034JEXD1RD
 		// eslint-disable-next-line jest/no-commented-out-tests
-		// it( 'IDR', () => {
-		// 	const money = numberFormatCurrency( {
-		// 		number: 107280000,
-		// 		currency: 'IDR',
-		// 		browserSafeLocale: 'in-ID',
-		// 		isSmallestUnit: true,
-		// 	} );
-		// eslint-disable-next-line no-irregular-whitespace
-		// 	expect( money ).toBe( 'Rp 1.072.800,00' );
-		// } );
+		it( 'IDR', () => {
+			const [ , majorVersion, minorVersion, patchVersion ] =
+				process.version.match( /^v(\d+).(\d+).(\d+)/ );
+			if (
+				parseInt( majorVersion ) > 22 ||
+				( parseInt( majorVersion ) === 22 && parseInt( minorVersion ) > 22 ) ||
+				( parseInt( majorVersion ) === 22 &&
+					parseInt( minorVersion ) === 22 &&
+					parseInt( patchVersion ) >= 1 )
+			) {
+				const smallMoney = numberFormatCurrency( {
+					number: 1072800,
+					currency: 'IDR',
+					browserSafeLocale: 'in-ID',
+					isSmallestUnit: true,
+				} );
+				// eslint-disable-next-line no-irregular-whitespace
+				expect( smallMoney ).toBe( 'Rp 1.072.800' );
+				const bigMoney = numberFormatCurrency( {
+					number: 1072800,
+					currency: 'IDR',
+					browserSafeLocale: 'in-ID',
+					isSmallestUnit: false,
+				} );
+				// eslint-disable-next-line no-irregular-whitespace
+				expect( bigMoney ).toBe( 'Rp 1.072.800' );
+			} else {
+				const smallMoney = numberFormatCurrency( {
+					number: 107280000,
+					currency: 'IDR',
+					browserSafeLocale: 'in-ID',
+					isSmallestUnit: true,
+				} );
+				// eslint-disable-next-line no-irregular-whitespace
+				expect( smallMoney ).toBe( 'Rp 1.072.800,00' );
+				const bigMoney = numberFormatCurrency( {
+					number: 1072800,
+					currency: 'IDR',
+					browserSafeLocale: 'in-ID',
+					isSmallestUnit: false,
+				} );
+				// eslint-disable-next-line no-irregular-whitespace
+				expect( bigMoney ).toBe( 'Rp 1.072.800,00' );
+			}
+		} );
 	} );
 } );
 
